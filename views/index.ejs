@@ -1,0 +1,47 @@
+<div class="container">
+
+    <div class="row" id="restaurants">
+        <div><a href="/addrestuarant" class="btn btn-primary m-3"> Ajouter réstaurant</a>
+        </div>
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Date Ajout</th>
+                    <th scope="col">Adresse</th>
+                    <th scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% restaurants.forEach(resto=> { %>
+                    <tr>
+                        <th scope="row">
+                            <%=resto.id%>
+                        </th>
+                        <td>
+                            <%=resto.name%>
+                        </td>
+                        <td>
+                            <%=resto.type%>
+                        </td>
+                        <td style="max-width: 200px;">
+                            <%=resto.dt_ajout%>
+                        </td>
+                        <td>
+                            <%=resto.adresse%>
+                        </td>
+                        <td>
+                            <button class="btn btn-warning">Details</button>
+                            <a href="/addmenu?idResto=<%=resto.id%>" class="btn btn-primary">Menus</a>
+                            <button class="btn btn-danger">Supprimer</button>
+                        </td>
+                    </tr>
+
+                    <% } );%>
+
+            </tbody>
+        </table>
+    </div>
+</div>

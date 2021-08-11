@@ -1,0 +1,35 @@
+<div class="container">
+    <div class="row">
+        <h1 class="text-center">Ajouter Restaurant</h1>
+    </div>
+    <div class="row">
+        <form action="/addrestuarant" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="name">Nom</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Nom du restaurant">
+            </div>
+
+            <div class="form-group">
+                <label for="adr">Adresse</label>
+                <input type="text" class="form-control" id="adr" name="adr" placeholder="93 Rue saint-lazzare ...">
+            </div>
+
+            <div class="form-group col-md-3">
+                <label for="type">sélectionnez un type de restaurant</label>
+                <select class="form-control" id="type" name="type">
+                    <option value="Asiatique">Asiatique</option>
+                    <option value="Africaine">Africaine</option>
+                    <option value="Francaise" selected>Francaise</option>
+
+                </select>
+            </div>
+            <div class="custom-file col-md-3">
+                <label class="custom-file-label" for="imgResto">photo du restaurant (mise en avant)</label>
+
+                <input type="file" class="form-control custom-file-input" id="imgResto" name="imgResto" required>
+                <div class="invalid-feedback">Example invalid custom file feedback</div>
+            </div>
+            <div class="m-3"><button type="submit" class="btn btn-primary">Enregistrer</button></div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,117 @@
+<script src="/js/addMenu.js"></script>
+<div class="container ">
+    <div class="row">
+        <h1 class="text-center">Ajouter Menu a un Restaurant</h1>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div>
+
+                <div class="form-group col-md-6">
+                    <label>Nom</label>
+                    <input type="text" class="form-control" value="<%=resto.name%>" disabled>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label>Adresse</label>
+                    <input type="text" class="form-control" value="<%=resto.adresse%>" disabled>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="type">Type de restaurant</label>
+                    <select class="form-control" disabled>
+                        <option value="Asiatique" <%=(resto.type=="Asiatique" ) ? "selected" : null; %> >Asiatique
+                        </option>
+                        <option value="Africaine" <%=(resto.type=="Africaine" ) ? "selected" : null; %> >Africaine
+                        </option>
+                        <option value="Francaise" <%=(resto.type=="Francaise" ) ? "selected" : null; %> >Francaise
+                        </option>
+
+                    </select>
+                </div>
+
+                <div class="m-3"><button type="button" onclick="showAddMenuForm()" class="btn btn-primary">Creer un
+                        Menu</button></div>
+            </div>
+        </div>
+        <div class="col-md-5" style="text-align: center;">
+            <img class="img-thumbnail" height="350" width="350" src="/uploads/<%=resto.imgs[0]%>">
+        </div>
+    </div>
+</div>
+<div class="container d-none " id="AjouterMenu">
+    <div class="row">
+        <form action="/addMenu" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <input type="text" class="form-control d-none " id="id" name="id" value="<%=resto.id%>">
+            </div>
+            <div class="form-group">
+                <label for="name">Nom</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Nom du Menu">
+            </div>
+
+            <div class="form-group">
+                <label for="ingredient">Ingrédients</label>
+                <textarea class="form-control" id="ingredient" name="ingredient" rows="3"></textarea>
+            </div>
+
+            <div class="custom-file col-md-3">
+                <label class="custom-file-label" for="imgMenu">photo du Menu (mise en avant)</label>
+
+                <input type="file" class="form-control custom-file-input" id="imgMenu" name="imgMenu" required>
+                <div class="invalid-feedback">Example invalid custom file feedback</div>
+            </div>
+            <div class="m-3"><button type="submit" class="btn btn-primary">Ajouter</button></div>
+        </form>
+    </div>
+</div>
+
+<div class="container" id="menus">
+    <% if(resto.menus.length> 0) { %>
+        <div class="row">
+            <table class="table table-dark" style=" display: block;  width: 100%;
+  height: 500px;
+  overflow-y: scroll;">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Date creation</th>
+                        <th scope="col">Ingrédients</th>
+                        <th scope="col">Nbr Produits/plats</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% resto.menus.forEach( (menu)=>{ %>
+                        <tr>
+                            <td>
+                                <%=menu.id%>
+                            </td>
+                            <td>
+                                <%=menu.nom%>
+                            </td>
+                            <td>
+                                <%=menu.dt_creation%>
+                            </td>
+                            <td>
+                                <%=menu.ingredient%>
+                            </td>
+                            <td>
+                                <%=menu.produits.length%>
+                            </td>
+                            <td><a class="btn btn-primary"
+                                    href="/addProductToMenu?idResto=<%=resto.id%>&idMenu=<%=menu.id%>">Ajouter
+                                    Produits</a>
+                            </td>
+
+                        </tr>
+                        <% }) %>
+
+
+
+                </tbody>
+            </table>
+        </div>
+        <% } %>
+</div>

@@ -1,0 +1,90 @@
+<div class="container">
+    <div class="row">
+        <h3 class="text-center">Ajouter produit / plat a un Menu</h3>
+        <div class="container">
+            <div class="row justify-content-center border">
+                <div class="col-md-6">
+                    <h5 style="text-decoration: underline;">infos sur le restaurant:</h5>
+
+                    <p>
+                        idMenu: <%=resto.id%>
+                    </p>
+                    <p>
+                        Titre du Menu: <%=resto.name%>
+                    </p>
+                    <p>
+                        Type: <%=resto.type%>
+                    </p>
+                    <p>
+                        Date d'ajout : <%=resto.dt_ajout%>
+                    </p>
+                    <p>
+                        Adresse: <%=resto.adresse%>
+                    </p>
+                </div>
+                <div class="col-md-6">
+                    <h5 style="text-decoration: underline;">infos sur le Menu :</h5>
+
+                    <p>
+                        idMenu: <%=menu.id%>
+                    </p>
+                    <p>
+                        Titre du Menu: <%=menu.nom%>
+                    </p>
+                    <p>
+                        Date de Création: <%=menu.dt_creation%>
+                    </p>
+                    <p>
+                        Nbr de Plats / produits : <%=menu.produits.length%>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <form>
+            <div class="form-group col-md-6">
+                <label for="titre">Titre</label>
+                <input type="email" class="form-control" id="titre" name="titre" aria-describedby="titreHelp"
+                    placeholder="Burger-tail-M">
+                <small id="titreHelp" class="form-text text-muted">ce titre sera visible pour les clients.</small>
+            </div>
+
+
+            <div class="form-group">
+                <label for="prix">Prix Unitaire</label>
+                <input type="number" class="form-control" id="prix" name="prix" placeholder="85">
+            </div>
+            <div class="col-auto">
+                <label class="sr-only" for="inlineFormInputGroup">Username</label>
+                <div class="input-group mb-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">@</div>
+                    </div>
+                    <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Username">
+                </div>
+                <div class="form-group">
+                    <label for="ingredients">Ingrédients: </label>
+                    <textarea class="form-control" id="ingredients" rows="3"></textarea>
+                </div>
+                <div class="custom-file col-md-3">
+                    <label class="custom-file-label" for="imgMenu">Photo du produit (mise en avant)</label>
+
+                    <input type="file" class="form-control custom-file-input" id="imgMenu" name="imgMenu" required>
+                    <div class="invalid-feedback">Example invalid custom file feedback</div>
+                </div>
+
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="available" name="available">
+                    <label class="form-check-label" for="available" aria-describedby="availableHelp">disponible en
+                        stock</label>
+                    <br>
+                    <small id="availableHelp" class="form-text text-muted">Si vous cliquez sur cette case, le produit
+                        apparaîtra immédiatement dans le menu.</small>
+
+                </div>
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
