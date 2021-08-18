@@ -42,10 +42,12 @@
         </div>
     </div>
     <div class="row">
-        <form>
+        <form method="POST" action="addProductToMenu" enctype="multipart/form-data">
+            <input type="text" class="d-none" name="idResto" id="idResto" value="<%=resto.id%>">
+            <input type="text" class="d-none" name="idMenu" id="idMenu" value="<%=menu.id%>">
             <div class="form-group col-md-6">
                 <label for="titre">Titre</label>
-                <input type="email" class="form-control" id="titre" name="titre" aria-describedby="titreHelp"
+                <input type="text" class="form-control" id="titre" name="titre" aria-describedby="titreHelp"
                     placeholder="Burger-tail-M">
                 <small id="titreHelp" class="form-text text-muted">ce titre sera visible pour les clients.</small>
             </div>
@@ -55,36 +57,68 @@
                 <label for="prix">Prix Unitaire</label>
                 <input type="number" class="form-control" id="prix" name="prix" placeholder="85">
             </div>
-            <div class="col-auto">
-                <label class="sr-only" for="inlineFormInputGroup">Username</label>
-                <div class="input-group mb-2">
-                    <div class="input-group-prepend">
-                        <div class="input-group-text">@</div>
+            <div class="form-group">
+                <label for="size_product">Taille</label>
+                <div class="row">
+
+                    <div class="form-check col" id="size_product">
+                        <input class="form-check-input" type="radio" name="taille" id="rd1" value="M" checked>
+                        <label class="form-check-label" for="rd1">
+                            M
+                        </label>
                     </div>
-                    <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Username">
-                </div>
-                <div class="form-group">
-                    <label for="ingredients">Ingrédients: </label>
-                    <textarea class="form-control" id="ingredients" rows="3"></textarea>
-                </div>
-                <div class="custom-file col-md-3">
-                    <label class="custom-file-label" for="imgMenu">Photo du produit (mise en avant)</label>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="taille" id="rd2" value="L" checked>
+                        <label class="form-check-label" for="rd2">
+                            L
+                        </label>
+                    </div>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="taille" id="rd3" value="XL" checked>
+                        <label class="form-check-label" for="rd3">
+                            XL
+                        </label>
+                    </div>
 
-                    <input type="file" class="form-control custom-file-input" id="imgMenu" name="imgMenu" required>
-                    <div class="invalid-feedback">Example invalid custom file feedback</div>
+                    <div class="form-check col">
+                        <input class="form-check-input" type="radio" name="taille" id="rd4" value="XXL" checked>
+                        <label class="form-check-label" for="rd4">
+                            XXL
+                        </label>
+                    </div>
                 </div>
+            </div>
+            <div class="form-group">
+                <label for="ingredients">Ingrédients: </label>
+                <textarea class="form-control" id="ingredients" name="ingredients" rows="3"></textarea>
+            </div>
+            <div class="custom-file col-md-3">
+                <label class="custom-file-label" for="imgProd">Photo du produit (mise en avant)</label>
 
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input" id="available" name="available">
-                    <label class="form-check-label" for="available" aria-describedby="availableHelp">disponible en
-                        stock</label>
-                    <br>
-                    <small id="availableHelp" class="form-text text-muted">Si vous cliquez sur cette case, le produit
-                        apparaîtra immédiatement dans le menu.</small>
+                <input type="file" class="form-control custom-file-input" id="imgProd" name="imgProd" required>
+                <div class="invalid-feedback">Example invalid custom file feedback</div>
+            </div>
 
-                </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="available" name="available">
+                <label class="form-check-label" for="available" aria-describedby="availableHelp">disponible en
+                    stock</label>
+                <br>
+                <small id="availableHelp" class="form-text text-muted">Si vous cliquez sur cette case, le produit
+                    apparaîtra immédiatement dans le menu.</small>
 
-                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" id="isOffre" name="isOffre">
+                <label class="form-check-label" for="isOffre" aria-describedby="availableHelp">C'est un offre
+                    ?</label>
+                <br>
+                <small id="isOffre" class="form-text text-muted">Si vous cliquez sur cette case, le produit
+                    apparaîtra comme offre speciale.</small>
+
+            </div>
+
+            <button type="submit" class="btn btn-primary">Ajouter</button>
         </form>
     </div>
 </div>

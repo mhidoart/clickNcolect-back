@@ -35,7 +35,10 @@
                         <td>
                             <button class="btn btn-warning">Details</button>
                             <a href="/addmenu?idResto=<%=resto.id%>" class="btn btn-primary">Menus</a>
-                            <button class="btn btn-danger">Supprimer</button>
+                            <form action="/delete_resto" method="post">
+                                <input class="d-none" name="idResto" type="text" value="<%=resto.id%>">
+                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                            </form>
                         </td>
                     </tr>
 

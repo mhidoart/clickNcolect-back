@@ -103,6 +103,13 @@
                             <td><a class="btn btn-primary"
                                     href="/addProductToMenu?idResto=<%=resto.id%>&idMenu=<%=menu.id%>">Ajouter
                                     Produits</a>
+                                <a class="btn btn-warning"
+                                    href="/updateMenu?idResto=<%=resto.id%>&idMenu=<%=menu.id%>">Modifier</a>
+                                <form action="/delete_menu" method="post">
+                                    <input type="text" class="d-none" name="idResto" value="<%=resto.id%>">
+                                    <input type="text" class="d-none" name="idMenu" value="<%=menu.id%>">
+                                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                                </form>
                             </td>
 
                         </tr>

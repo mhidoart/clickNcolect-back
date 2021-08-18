@@ -100,7 +100,7 @@ app.get('/', async (req, res) => {
                 restoArray.push(resto)
             });
 
-            res.render('index', { restaurants: restoArray, layout: './layouts/public' })
+            res.render('index', { restaurants: restoArray, layout: './layouts/dashboardADM' })
         }
     } catch (error) {
         res.status(400).send(error.message);
@@ -110,7 +110,7 @@ app.get('/', async (req, res) => {
 
 //page ajouter restaurant
 app.get('/addrestuarant', (req, res) => {
-    res.render('addResto', { layout: './layouts/public' })
+    res.render('addResto', { layout: './layouts/dashboardADM' })
 })
 
 //ajouter un resto a la base de données
@@ -156,6 +156,55 @@ async function getRestoById(idResto) {
         return null
     }
 }
+
+//delete restaurant by id
+async function deleteRestoById(idResto) {
+    try {
+
+        await firestore.collection('restaurant').doc(idResto).delete();
+        return true;
+
+    } catch (error) {
+        console.log(error)
+        return false;
+    }
+}
+
+//delete menu from resto
+
+async function deleteMenu(idResto, idMenu) {
+    const restoRecord = await firestore.collection('restaurant').doc(idResto);
+    const data = await restoRecord.get();
+    var resto = data.data()
+
+
+
+    resto.menus.forEach(function (item, index, object) {
+        if (item.id == idMenu) {
+            object.splice(index, 1);
+        }
+    })
+
+
+    const record = await firestore.collection('restaurant').doc(idResto)
+    await record.update(resto)
+
+    return true;
+
+
+}
+app.post('/delete_resto', async (req, res) => {
+    deleteRestoById(req.body.idResto).then((result) => {
+
+        if (result) {
+            res.redirect('/#dashboard')
+        } else {
+            res.status(401).send("can't delete restaurant")
+        }
+
+    })
+})
+
 //menus
 
 //page ajouter menu 
@@ -165,7 +214,7 @@ app.get('/addmenu', async (req, res) => {
     getRestoById(req.query.idResto).then(
         (resto) => {
             if (resto) {
-                res.render('addmenu', { resto: resto, layout: './layouts/public' })
+                res.render('addmenu', { resto: resto, layout: './layouts/dashboardADM' })
 
             } else {
                 res.status(200).send("no record found !")
@@ -173,6 +222,15 @@ app.get('/addmenu', async (req, res) => {
 
         }
     );
+})
+
+//supprimer un menu sachand id du menu et id du resto
+app.post('/delete_menu', async (req, res) => {
+    deleteMenu(req.body.idResto, req.body.idMenu).then((result) => {
+        res.redirect('/addmenu?idResto=' + req.body.idResto)
+
+    });
+
 })
 //ajouter un menu a la base de données
 app.post('/addMenu', upload.single('imgMenu'), async (req, res) => {
@@ -221,7 +279,7 @@ app.get('/addProductToMenu', async (req, res) => {
         (resto) => {
             if (resto) {
                 let menu = resto.menus.find(m => m.id == req.query.idMenu)
-                res.render('addProductToMenu', { resto: resto, menu: menu, layout: './layouts/public' })
+                res.render('addProductToMenu', { resto: resto, menu: menu, layout: './layouts/dashboardADM' })
 
             } else {
                 res.status(200).send("no record found !")
@@ -231,6 +289,106 @@ app.get('/addProductToMenu', async (req, res) => {
     );
 
 })
+
+//ajouter un menu a la base de données
+app.post('/addProductToMenu', upload.single('imgProd'), async (req, res) => {
+    console.log(req.file);
+    try {
+
+        idResto = req.body.idResto;
+        idMenu = req.body.idMenu;
+        //get the concerned resto
+        const restoRecord = await firestore.collection('restaurant').doc(idResto);
+        const data = await restoRecord.get();
+        var resto = data.data()
+        resto.menus.forEach(menu => {
+            if (menu.id == idMenu) {
+                const product = {
+                    id: uuid.v4(),
+                    nom: (req.body.titre = "").toLocaleUpperCase(),
+                    prix: req.body.prix,
+                    dt_creation: new Date().toLocaleDateString(),
+                    ingredient: req.body.ingredients.replace(/(\r\n|\n|\r)/gm, ";"),
+                    image: req.file.filename,
+                    taille: req.body.taille,
+                    disponible: req.body.available == 'on' ? true : false,
+                    isOffre: req.body.isOffre == 'on' ? true : false
+                }
+                menu.produits.push(product)
+                console.log(product);
+            }
+        });
+
+
+
+        //console.log(resto);
+        const record = await firestore.collection('restaurant').doc(idResto)
+        await record.update(resto)
+        res.redirect('/addmenu?idResto=' + idResto);
+
+
+
+    } catch (error) {
+        res.status(400).send(error.message);
+
+    }
+
+
+
+})
+app.get('/updateMenu', async (req, res) => {
+
+    getRestoById(req.query.idResto).then(
+        (resto) => {
+            if (resto) {
+                let menu = resto.menus.find(m => m.id == req.query.idMenu)
+                res.render('updateMenu', { resto: resto, menu: menu, layout: './layouts/dashboardADM' })
+
+            } else {
+                res.status(200).send("no record found !")
+            }
+
+        }
+    );
+})
+
+// update menu infos
+app.post('/updateMenu', upload.single('imgMenu'), async (req, res) => {
+    console.log(req.file);
+    try {
+
+        idResto = req.body.id;
+        //get the concerned resto
+        const restoRecord = await firestore.collection('restaurant').doc(idResto);
+        const data = await restoRecord.get();
+        var resto = data.data()
+        resto.menus.forEach(m => {
+            if (m.id == req.body.idMenu) {
+                m.nom = req.body.name;
+                m.dt_creation = new Date().toLocaleDateString();
+                m.ingredient = req.body.ingredient.replace(/(\r\n|\n|\r)/gm, ";");
+                m.image = req.file == undefined ? m.image : req.file.filename;
+
+            }
+        });
+
+
+        console.log(resto);
+        const record = await firestore.collection('restaurant').doc(idResto)
+        await record.update(resto)
+        res.redirect('/addmenu?idResto=' + idResto);
+
+
+
+    } catch (error) {
+        res.status(400).send(error.message);
+
+    }
+
+
+
+})
+
 
 
 //start server 
