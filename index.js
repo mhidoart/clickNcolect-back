@@ -76,6 +76,37 @@ const { toDateTime } = require('./utils');
 const Menu = require('./model/menu');
 //routes
 
+// statistiques globale
+
+app.get('/globalstatpile', async (req, res) => {
+    try {
+        const restaurants = await firestore.collection('restaurant');
+        const data = await restaurants.get();
+        const restoArray = [];
+        if (data.empty) {
+            res.status(404).send('No student record found');
+        } else {
+            var nbrMenus = 0;
+            var nbrResto = 0;
+            data.forEach(doc => {
+                nbrResto += 1;
+
+                nbrMenus = nbrMenus + doc.data().menus.length;
+
+            }
+            );
+            res.json({
+                restaurants: nbrResto,
+                users: 3,
+                menus: nbrMenus
+
+            })
+        }
+    } catch (error) {
+        res.status(400).send(error.message);
+
+    }
+})
 //page principale 
 app.get('/', async (req, res) => {
     try {
