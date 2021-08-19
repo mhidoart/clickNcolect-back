@@ -1,0 +1,37 @@
+<!-- Plus d'info sur notre blog : https://switch.paris/blog/construire-une-grille-produits-avec-css-grid-aujourdhui -->
+<link rel="stylesheet" href="/css/produitMenu.css">
+<ul class="product-grid">
+
+    <% menu.produits.forEach( (item)=>{ %>
+        <li class="product-item container-fluid">
+            <div class="row" style="
+  border-bottom: 1px solid black; padding-top: 10px; padding-bottom: 10px;">
+                <div class="col-md-2">
+                    <img src="<%=item.image%>" class="img-fluid" alt="">
+                </div>
+                <div class="col-md-10">
+                    <div class="row">
+                        <h1>
+                            <%=item.nom%>
+                        </h1>
+                    </div>
+                    <div class="row">
+                        <span> Taille : <%=item.taille%></span>
+                        <span> Déscription : <br>
+                            <%=item.ingredient%>
+                        </span>
+                        <span> Date création /modification : <%=item.dt_creation%></span>
+
+                    </div>
+                    <div class=" d-flex flex-row-reverse"">
+                        <span > Prix : <%=item.prix%> €</span>
+                    </div>
+
+                </div>
+            </div>
+        </li>
+
+        <% } );%>
+
+
+</ul>

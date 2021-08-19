@@ -105,6 +105,8 @@
                                     Produits</a>
                                 <a class="btn btn-warning"
                                     href="/updateMenu?idResto=<%=resto.id%>&idMenu=<%=menu.id%>">Modifier</a>
+                                <a class="btn btn-light"
+                                    href="/menu_list?idResto=<%=resto.id%>&idMenu=<%=menu.id%>">liste des produits</a>
                                 <form action="/delete_menu" method="post">
                                     <input type="text" class="d-none" name="idResto" value="<%=resto.id%>">
                                     <input type="text" class="d-none" name="idMenu" value="<%=menu.id%>">

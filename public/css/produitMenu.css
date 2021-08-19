@@ -1,0 +1,20 @@
+/* Motif de fond issu de http://lea.verou.me/css3patterns/ */
+body {
+  background: 
+    linear-gradient(135deg, #e5e7f5 25%, transparent 25%) -50px 0,
+    linear-gradient(225deg, #e5e7f5 25%, transparent 25%) -50px 0,
+    linear-gradient(315deg, #e5e7f5 25%, transparent 25%),
+    linear-gradient(45deg, #e5e7f5 25%, transparent 25%);	
+  background-size: 100px 100px;
+  background-color: #dde0f2;
+}
+
+.product-grid {
+  background-color: rgba( 255, 255, 255, 1);
+  box-shadow: 0 2px 20px 0 rgba(0, 0, 0, .1);
+  list-style-type: none;
+  margin: 50px auto;
+  padding: 10px;
+  width: 90%;
+
+}

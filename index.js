@@ -421,6 +421,22 @@ app.post('/updateMenu', upload.single('imgMenu'), async (req, res) => {
 })
 
 
+app.get('/menu_list', async (req, res) => {
+
+    getRestoById(req.query.idResto).then(
+        (resto) => {
+            if (resto) {
+                let menu = resto.menus.find(m => m.id == req.query.idMenu)
+
+                res.render('produitMenu', { resto: resto, menu: menu, layout: './layouts/dashboardADM' })
+
+            } else {
+                res.status(200).send("no record found !")
+            }
+
+        }
+    );
+})
 
 //start server 
 const port = process.env.PORT
